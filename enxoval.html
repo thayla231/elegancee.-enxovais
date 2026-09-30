@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Enxovais Dona Valkiria</title>
+
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background: #fff5f7;
+    margin: 0;
+    color: #333;
+}
+
+header {
+    background: #d96b8a;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+.container {
+    max-width: 900px;
+    margin: 30px auto;
+    padding: 20px;
+}
+
+.caixa {
+    background: white;
+    padding: 25px;
+    margin-bottom: 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px #ccc;
+}
+
+input, select, button {
+    width: 100%;
+    padding: 12px;
+    margin: 7px 0;
+    box-sizing: border-box;
+}
+
+button {
+    background: #d96b8a;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #bd4f70;
+}
+
+.produto {
+    border: 1px solid #ddd;
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 8px;
+}
+
+.escondido {
+    display: none;
+}
+
+.total {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.pedido {
+    background: #fff0f3;
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 8px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>🌸 Enxovais Dona Valkiria 🌸</h1>
+    <p>Qualidade e carinho para sua casa</p>
+</header>
+
+<div class="container">
+
+<!-- INÍCIO -->
+<div id="inicio" class="caixa">
+
+    <h2>Bem-vindo!</h2>
+
+    <button onclick="mostrar('loginCliente')">
+        👤 Entrar como Cliente
+    </button>
+
+    <button onclick="mostrar('cadastro')">
+        📝 Criar Conta
+    </button>
+
+    <button onclick="mostrar('loginAdmin')">
+        🔐 Área Dona Valkiria
+    </button>
+
+</div>
+
+
+<!-- LOGIN CLIENTE -->
+<div id="loginCliente" class="caixa escondido">
+
+    <h2>Login do Cliente</h2>
+
+    <input type="text" id="loginNome" placeholder="Nome">
+
+    <input type="password" id="loginSenha" placeholder="Senha">
+
+    <button onclick="entrarCliente()">Entrar</button>
+
+    <button onclick="mostrar('inicio')">Voltar</button>
+
+</div>
+
+
+<!-- CADASTRO -->
+<div id="cadastro" class="caixa escondido">
+
+    <h2>Criar Conta</h2>
+
+    <input type="text" id="nome" placeholder="Nome completo">
+
+    <input type="text" id="cpf" placeholder="CPF">
+
+    <input type="text" id="telefone" placeholder="Telefone / WhatsApp">
+
+    <input type="email" id="email" placeholder="E-mail">
+
+    <input type="password" id="senha" placeholder="Senha">
+
+    <button onclick="cadastrar()">
+        Criar Conta
+    </button>
+
+    <button onclick="mostrar('inicio')">
+        Voltar
+    </button>
+
+</div>
+
+
+<!-- LOJA -->
+<div id="loja" class="caixa escondido">
+
+    <h2>🛍️ Produtos</h2>
+
+    <div class="produto">
+        <h3>Jogo de Cama</h3>
+        <p>Jogo de cama confortável e bonito.</p>
+        <strong>R$ 89,90</strong>
+        <button onclick="adicionar('Jogo de Cama', 89.90)">
+            Adicionar
+        </button>
+    </div>
+
+    <div class="produto">
+        <h3>Kit Toalhas</h3>
+        <p>Kit com toalhas para banho.</p>
+        <strong>R$ 69,90</strong>
+        <button onclick="adicionar('Kit Toalhas', 69.90)">
+            Adicionar
+        </button>
+    </div>
+
+    <div class="produto">
+        <h3>Edredom</h3>
+        <p>Edredom confortável para sua cama.</p>
+        <strong>R$ 149,90</strong>
+        <button onclick="adicionar('Edredom', 149.90)">
+            Adicionar
+        </button>
+    </div>
+
+    <button onclick="mostrar('carrinho')">
+        🛒 Ver Carrinho
+    </button>
+
+</div>
+
+
+<!-- CARRINHO -->
+<div id="carrinho" class="caixa escondido">
+
+    <h2>🛒 Meu Carrinho</h2>
+
+    <div id="listaCarrinho"></div>
+
+    <p class="total">
+        Produtos: R$ <span id="valorProdutos">0.00</span>
+    </p>
+
+    <h3>Como deseja receber?</h3>
+
+    <select id="entrega" onchange="calcularTotal()">
+
+        <option value="retirada">
+            Retirar na loja - Grátis
+        </option>
+
+        <option value="centro">
+            Entregar - Centro - R$ 5,00
+        </option>
+
+        <option value="bairro1">
+            Entregar - Bairro 1 - R$ 8,00
+        </option>
+
+        <option value="bairro2">
+            Entregar - Bairro 2 - R$ 12,00
+        </option>
+
+    </select>
+
+    <label>Data de entrega/retirada:</label>
+
+    <input type="date" id="dataEntrega">
+
+    <p>
+        Taxa: R$ <span id="taxa">0.00</span>
+    </p>
+
+    <p class="total">
+        TOTAL: R$ <span id="total">0.00</span>
+    </p>
+
+    <button onclick="finalizarPedido()">
+        ✅ Finalizar Pedido
+    </button>
+
+    <button onclick="mostrar('loja')">
+        Continuar comprando
+    </button>
+
+</div>
+
+
+<!-- LOGIN ADMIN -->
+<div id="loginAdmin" class="caixa escondido">
+
+    <h2>🔐 Dona Valkiria</h2>
+
+    <input type="text" id="adminCpf" placeholder="CPF">
+
+    <input type="password" id="adminSenha" placeholder="Senha">
+
+    <button onclick="entrarAdmin()">
+        Entrar
+    </button>
+
+    <button onclick="mostrar('inicio')">
+        Voltar
+    </button>
+
+</div>
+
+
+<!-- PAINEL ADMIN -->
+<div id="admin" class="caixa escondido">
+
+    <h2>🌸 Painel da Dona Valkiria</h2>
+
+    <h3>Pedidos</h3>
+
+    <div id="pedidos"></div>
+
+    <button onclick="limparPedidos()">
+        Limpar pedidos
+    </button>
+
+    <button onclick="mostrar('inicio')">
+        Sair
+    </button>
+
+</div>
+
+</div>
+
+
+<script>
+
+let carrinho = [];
+
+let usuario = null;
+
+
+/* MOSTRAR TELAS */
+
+function mostrar(id) {
+
+    let telas = document.querySelectorAll(".caixa");
+
+    telas.forEach(function(tela) {
+        tela.classList.add("escondido");
+    });
+
+    document.getElementById(id).classList.remove("escondido");
+
+}
+
+
+/* CADASTRO */
+
+function cadastrar() {
+
+    usuario = {
+
+        nome: document.getElementById("nome").value,
+        cpf: document.getElementById("cpf").value,
+        telefone: document.getElementById("telefone").value,
+        email: document.getElementById("email").value,
+        senha: document.getElementById("senha").value
+
+    };
+
+    localStorage.setItem(
+        "usuario",
+        JSON.stringify(usuario)
+    );
+
+    alert("Conta criada com sucesso!");
+
+    mostrar("loja");
+
+}
+
+
+/* LOGIN CLIENTE */
+
+function entrarCliente() {
+
+    let salvo = localStorage.getItem("usuario");
+
+    if (!salvo) {
+
+        alert("Você ainda não possui uma conta.");
+
+        return;
+    }
+
+    let dados = JSON.parse(salvo);
+
+    let nome = document.getElementById("loginNome").value;
+    let senha = document.getElementById("loginSenha").value;
+
+    if (nome == dados.nome && senha == dados.senha) {
+
+        usuario = dados;
+
+        alert("Bem-vindo, " + dados.nome + "!");
+
+        mostrar("loja");
+
+    } else {
+
+        alert("Nome ou senha incorretos.");
+
+    }
+
+}
+
+
+/* ADICIONAR PRODUTO */
+
+function adicionar(nome, preco) {
+
+    carrinho.push({
+
+        nome: nome,
+        preco: preco
+
+    });
+
+    alert(nome + " foi adicionado ao carrinho!");
+
+    atualizarCarrinho();
+
+}
+
+
+/* ATUALIZAR CARRINHO */
+
+function atualizarCarrinho() {
+
+    let lista = document.getElementById("listaCarrinho");
+
+    lista.innerHTML = "";
+
+    let total = 0;
+
+    carrinho.forEach(function(produto, indice) {
+
+        total += produto.preco;
+
+        lista.innerHTML +=
+
+        "<div class='pedido'>" +
+
+        produto.nome +
+
+        " - R$ " +
+
+        produto.preco.toFixed(2) +
+
+        " <button onclick='remover(" +
+
+        indice +
+
+        ")'>Remover</button>" +
+
+        "</div>";
+
+    });
+
+    document.getElementById("valorProdutos").innerText =
+        total.toFixed(2);
+
+    calcularTotal();
+
+}
+
+
+/* REMOVER */
+
+function remover(indice) {
+
+    carrinho.splice(indice, 1);
+
+    atualizarCarrinho();
+
+}
+
+
+/* CALCULAR TOTAL */
+
+function calcularTotal() {
+
+    let produtos = 0;
+
+    carrinho.forEach(function(produto) {
+
+        produtos += produto.preco;
+
+    });
+
+    let entrega =
+        document.getElementById("entrega").value;
+
+    let taxa = 0;
+
+    if (entrega == "centro") {
+
+        taxa = 5;
+
+    }
+
+    if (entrega == "bairro1") {
+
+        taxa = 8;
+
+    }
+
+    if (entrega == "bairro2") {
+
+        taxa = 12;
+
+    }
+
+    document.getElementById("taxa").innerText =
+        taxa.toFixed(2);
+
+    document.getElementById("total").innerText =
+        (produtos + taxa).toFixed(2);
+
+}
+
+
+/* FINALIZAR PEDIDO */
+
+function finalizarPedido() {
+
+    if (!usuario) {
+
+        alert("Faça seu cadastro ou login primeiro.");
+
+        return;
+
+    }
+
+    if (carrinho.length == 0) {
+
+        alert("Seu carrinho está vazio.");
+
+        return;
+
+    }
+
+    let entrega =
+        document.getElementById("entrega").value;
+
+    let data =
+        document.getElementById("dataEntrega").value;
+
+    let pedidos =
+        JSON.parse(localStorage.getItem("pedidos")) || [];
+
+    let valor =
+        parseFloat(
+            document.getElementById("total").innerText
+        );
+
+    let pedido = {
+
+        cliente: usuario.nome,
+
+        cpf: usuario.cpf,
+
+        produtos: carrinho,
+
+        entrega: entrega,
+
+        data: data,
+
+        valor: valor,
+
+        status: "Pedido recebido"
+
+    };
+
+    pedidos.push(pedido);
+
+    localStorage.setItem(
+        "pedidos",
+        JSON.stringify(pedidos)
+    );
+
+    alert("Pedido realizado com sucesso!");
+
+    carrinho = [];
+
+    atualizarCarrinho();
+
+    mostrar("loja");
+
+}
+
+
+/* LOGIN ADMIN */
+
+function entrarAdmin() {
+
+    let cpf =
+        document.getElementById("adminCpf").value;
+
+    let senha =
+        document.getElementById("adminSenha").value;
+
+
+    /*
+    LOGIN DE TESTE
+
+    CPF: 12345678900
+    SENHA: 1234
+    */
+
+    if (
+        cpf == "12345678900" &&
+        senha == "1234"
+    ) {
+
+        carregarPedidos();
+
+        mostrar("admin");
+
+    } else {
+
+        alert("CPF ou senha da Dona Valkiria incorretos.");
+
+    }
+
+}
+
+
+/* MOSTRAR PEDIDOS */
+
+function carregarPedidos() {
+
+    let pedidos =
+        JSON.parse(localStorage.getItem("pedidos")) || [];
+
+    let div =
+        document.getElementById("pedidos");
+
+    div.innerHTML = "";
+
+    if (pedidos.length == 0) {
+
+        div.innerHTML =
+            "<p>Nenhum pedido realizado.</p>";
+
+        return;
+
+    }
+
+    pedidos.forEach(function(pedido, indice) {
+
+        let produtos = "";
+
+        pedido.produtos.forEach(function(produto) {
+
+            produtos +=
+                produto.nome +
+                " - R$ " +
+                produto.preco.toFixed(2) +
+                "<br>";
+
+        });
+
+        div.innerHTML +=
+
+        "<div class='pedido'>" +
+
+        "<strong>Pedido #" +
+        (indice + 1) +
+        "</strong><br><br>" +
+
+        "Cliente: " +
+        pedido.cliente +
+        "<br>" +
+
+        "CPF: " +
+        pedido.cpf +
+        "<br><br>" +
+
+        "<strong>Produtos:</strong><br>" +
+
+        produtos +
+
+        "<br>Forma de recebimento: " +
+        pedido.entrega +
+
+        "<br>Data: " +
+        pedido.data +
+
+        "<br><strong>Valor: R$ " +
+        pedido.valor.toFixed(2) +
+        "</strong>" +
+
+        "<br><br>Status: " +
+        pedido.status +
+
+        "<br><br>" +
+
+        "<button onclick='alterarStatus(" +
+        indice +
+        ")'>Alterar status</button>" +
+
+        "<button onclick='notaFiscal(" +
+        indice +
+        ")'>Nota Fiscal</button>" +
+
+        "</div>";
+
+    });
+
+}
+
+
+/* ALTERAR STATUS */
+
+function alterarStatus(indice) {
+
+    let pedidos =
+        JSON.parse(localStorage.getItem("pedidos"));
+
+    let status = prompt(
+
+        "Digite o novo status:\n\n" +
+
+        "1 - Pedido recebido\n" +
+        "2 - Preparando\n" +
+        "3 - Pronto\n" +
+        "4 - Saiu para entrega\n" +
+        "5 - Entregue\n" +
+        "6 - Retirado na loja"
+
+    );
+
+    let nomes = {
+
+        "1": "Pedido recebido",
+        "2": "Preparando",
+        "3": "Pronto",
+        "4": "Saiu para entrega",
+        "5": "Entregue",
+        "6": "Retirado na loja"
+
+    };
+
+    if (nomes[status]) {
+
+        pedidos[indice].status =
+            nomes[status];
+
+        localStorage.setItem(
+            "pedidos",
+            JSON.stringify(pedidos)
+        );
+
+        carregarPedidos();
+
+    }
+
+}
+
+
+/* NOTA FISCAL */
+
+function notaFiscal(indice) {
+
+    alert(
+
+        "Área de emissão de Nota Fiscal\n\n" +
+
+        "Pedido #" +
+        (indice + 1) +
+
+        "\n\n" +
+
+        "A integração fiscal deverá ser configurada " +
+        "com o sistema de emissão de notas."
+
+    );
+
+}
+
+
+/* LIMPAR PEDIDOS */
+
+function limparPedidos() {
+
+    if (
+        confirm(
+            "Deseja realmente apagar todos os pedidos?"
+        )
+    ) {
+
+        localStorage.removeItem("pedidos");
+
+        carregarPedidos();
+
+    }
+
+}
+
+
+/* INICIAR */
+
+mostrar("inicio");
+
+</script>
+
+</body>
+</html>
